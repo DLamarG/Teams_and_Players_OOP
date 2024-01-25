@@ -19,17 +19,17 @@ class Menu:
             selection = str(input(  "Select an option\n"))
             print()
             if selection == '1':
-                 pass
+                TeamInfo.print_teams_to_screen()
             if selection == '2':
-                 pass
+                pass
             if selection == '3':
                  pass
             if selection == '4':
                 pass
             if selection == '5':
-                 pass
+                pass
             if selection == '6':
-                 pass
+                pass
             if selection == '7':
                  exit()
             print()
@@ -45,3 +45,26 @@ class Menu:
 
     def run(self):
         self.play()
+
+
+
+class TeamInfo:
+
+    def __init__(self):
+          self.inventory = None
+
+    @classmethod
+    def print_teams_to_screen(cls):
+        with open("Teams.csv", 'r') as csvfile:
+            teams = csv.DictReader(csvfile)
+            for row in teams:
+                print()
+                print(f" Team_Name: {row['Team_Name']}; Division: {row['Division']}; Coach: {row['Coach']}")
+                print()
+
+
+
+
+
+new_run = Menu()
+new_run.run()
