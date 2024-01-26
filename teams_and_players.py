@@ -19,7 +19,7 @@ class Menu:
             selection = str(input(  "Select an option\n"))
             print()
             if selection == '1':
-                TeamInfo.print_teams_to_screen()
+                TeamInfo.print_team_name_to_screen()
             if selection == '2':
                 pass
             if selection == '3':
@@ -54,12 +54,12 @@ class TeamInfo:
           self.inventory = None
 
     @classmethod
-    def print_teams_to_screen(cls):
+    def print_team_name_to_screen(cls):
         with open("Teams.csv", 'r') as csvfile:
             teams = csv.DictReader(csvfile)
             for row in teams:
                 print()
-                print(f" Team_Name: {row['Team_Name']}; Division: {row['Division']}; Coach: {row['Coach']}")
+                print(f" Team_Name: {row['Team_Name']}")
                 print()
 
 
