@@ -3,7 +3,7 @@ from random import *
 class Menu:
 
     def __init__(self):
-        self.options = ["List Team Names", "List Players on Team", "List Players Stats", "List Teams by Division", "Trade Player", "List Trades by Team", "Add New Player", "Remove Player" "Exit"]
+        self.options = ["List Team Names", "List Team and Coach", "List Players Stats", "List Teams by Division", "Trade Player", "List Trades by Team", "Add New Player", "Remove Player" "Exit"]
 
 
     def display_menu(self):
@@ -21,9 +21,9 @@ class Menu:
             if selection == '1':
                 TeamInfo.print_team_name_to_screen()
             if selection == '2':
-                pass
+                TeamInfo.print_team_name_and_coach_to_screen()
             if selection == '3':
-                 pass
+                 TeamInfo.print_team_name_and_coach_to_screen()
             if selection == '4':
                 pass
             if selection == '5':
@@ -60,6 +60,27 @@ class TeamInfo:
             for row in teams:
                 print()
                 print(f" Team_Name: {row['Team_Name']}")
+                print()
+
+    @classmethod
+    def print_team_name_and_coach_to_screen(cls):
+        with open("Teams.csv", 'r') as csvfile:
+            teams = csv.DictReader(csvfile)
+            for row in teams:
+                print()
+                print(f" Team_Name: {row['Team_Name']}, Coach: {row['Coach']}")
+                print()
+
+
+    @classmethod
+    def print_team_name_and_coach_to_screen(cls):
+        with open("Teams.csv", 'r') as csvfile:
+            teams = csv.DictReader(csvfile)
+            for row in teams:
+                print()
+                print(f"Team: {row['Team_Name']}")
+                print(f"Coach: {row['Coach']} ")
+                print(f"Division: {row['Division']}")
                 print()
 
 
