@@ -3,7 +3,7 @@ from random import *
 class Menu:
 
     def __init__(self):
-        self.options = ["List Team Names", "List Playes on Team", "List Players Stats", "List Teams by Division", "Trade Player", "List Trades by Team", "Add New Player", "Remove Player" "Exit"]
+        self.options = ["List Team Names", "List Players on Team", "List Players Stats", "List Teams by Division", "Trade Player", "List Trades by Team", "Add New Player", "Remove Player" "Exit"]
 
 
     def display_menu(self):
