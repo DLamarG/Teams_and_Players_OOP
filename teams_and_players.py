@@ -98,6 +98,8 @@ class TradePlayer(Menu):
         self.recieving_team_name = None
         self.traded_player_name = None
         self.recieved_player_name = None
+        self.trading_team_ready = False
+        self.recieving_team_ready = False
         # super().__init__()
 
 
@@ -124,6 +126,8 @@ class TradePlayer(Menu):
     def validate_trading_team_input(self):
         trading_team_info = []
         depth = 0
+        depth2 = 0
+        depth3 = 0
         print("Follow the instructions to validate information")
         if depth == 0:
             team_name = str(input("Enter Team Name\n"))
@@ -138,7 +142,15 @@ class TradePlayer(Menu):
                 reader = csv.reader(file)
                 players = list(reader)
             for player in players:
-                print(player)
+                if player[0].title() == self.trading_team_name.title():
+                    depth2 += 1
+                if player[1].title() == self.traded_player_name.title():
+                    depth2 += 1
+                if player[3].title() == True:
+                    depth2 += 1
+                if depth2 == 3:
+                    self.trading_team_ready = True
+        print(self.trading_team_ready)
 
 
 
