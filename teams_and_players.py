@@ -1,9 +1,9 @@
 import csv
 from random import *
-class Menu:
+class Menu():
 
     def __init__(self):
-        self.options = ["List Team Names", "List Team and Coach", "List Team and Coach", "List Teams by Division", "Trade Player", "List Trades by Team", "Add New Player", "Remove Player" "Exit"]
+        self.options = ["List Team Names", "List Team and Coach", "List Team and Coach", "List Teams by Division", "Trade Player", "List Trades by Team", "Add New Player", "Remove Player", "Exit"]
 
 
     def display_menu(self):
@@ -27,10 +27,15 @@ class Menu:
             if selection == '4':
                 pass
             if selection == '5':
-                pass
+                trade_player_instance = TradePlayer()
+                trade_player_instance.validate_trading_team_input()
             if selection == '6':
                 pass
             if selection == '7':
+                 pass
+            if selection == '8':
+                 pass
+            if selection == '9':
                  exit()
             print()
             print()
@@ -93,7 +98,7 @@ class TradePlayer(Menu):
         self.recieving_team_name = None
         self.traded_player_name = None
         self.recieved_player_name = None
-        super().__init__()
+        # super().__init__()
 
 
     # def rent_video(self):
@@ -128,5 +133,19 @@ class TradePlayer(Menu):
             player_name = str(input("Enter Player Name\n"))
             self.traded_player_name = player_name
             depth += 1
+        if depth == 2:
+            with open('players.csv', 'r') as file:
+                reader = csv.reader(file)
+                players = list(reader)
+            for player in players:
+                print(player)
+
+
+
+
+
+
+
+
 new_run = Menu()
 new_run.run()
