@@ -150,15 +150,15 @@ class TradePlayer(Menu):
                 if depth2 == 3:
                     self.trading_team_ready = True
         
-        if depth3 == 0:
+        if depth3 == 2:
             team_name = str(input("Enter Recieving Team Name\n"))
             self.trading_team_name = team_name
             depth += 1
-        if depth3 == 1:
+        if depth3 == 3:
             player_name = str(input("Enter Recieving Team Player Name\n"))
             self.traded_player_name = player_name
             depth += 1
-        if depth3 == 2:
+        if depth3 == 4:
             with open('players.csv', 'r') as file:
                 reader = csv.reader(file)
                 players = list(reader)
@@ -171,6 +171,10 @@ class TradePlayer(Menu):
                     depth2 += 1
                 if depth2 == 3:
                     self.recieved_team_ready = True
+        
+
+        if self.recieving_team_ready and self.trading_team_ready:
+            print("YES")
         
         
 
