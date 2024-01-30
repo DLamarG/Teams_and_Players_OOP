@@ -116,10 +116,17 @@ class TradePlayer(Menu):
     #             if movie[2] > '0':
     #                 pass
 
-
-
-
-
-
+    def validate_trading_team_input(self):
+        trading_team_info = []
+        depth = 0
+        print("Follow the instructions to validate information")
+        if depth == 0:
+            team_name = str(input("Enter Team Name\n"))
+            self.trading_team_name = team_name
+            depth += 1
+        if depth == 1:
+            player_name = str(input("Enter Player Name\n"))
+            self.traded_player_name = player_name
+            depth += 1
 new_run = Menu()
 new_run.run()
