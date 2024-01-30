@@ -100,28 +100,8 @@ class TradePlayer(Menu):
         self.recieved_player_name = None
         self.trading_team_ready = False
         self.recieving_team_ready = False
-        # super().__init__()
+        super().__init__()
 
-
-    # def rent_video(self):
-    #     movies = []
-    #     count1 = 0
-    #     print("Please enter the following information to check availability of your video")
-    #     if count1 == 0:
-    #         input1 = str(input( "Enter Account ID\n"))
-    #         self.customer_id = input1
-    #         count1 += 1
-    #     if count1 == 1:
-    #         input2 = str(input( "Enter Movie Title\n"))
-    #         self.movie_title = input2.title()
-    #         count1 += 1
-    #     with open('inventory.csv', 'r') as file:
-    #         reader = csv.reader(file)
-    #         movies = list(reader)
-    #     for movie in movies:
-    #         if movie[1].title() == self.movie_title.title():
-    #             if movie[2] > '0':
-    #                 pass
 
     def validate_trading_team_input(self):
         depth = 0
@@ -129,11 +109,11 @@ class TradePlayer(Menu):
         depth3 = 0
         print("Follow the instructions to validate information")
         if depth == 0:
-            team_name = str(input("Enter Trading Team Name\n"))
+            team_name = str(input("Enter Trading Team Name\n")).title()
             self.trading_team_name = team_name
             depth += 1
         if depth == 1:
-            player_name = str(input("Enter Trading Team Player Name\n"))
+            player_name = str(input("Enter Trading Team Player Name\n")).title()
             self.traded_player_name = player_name
             depth += 1
         if depth == 2:
@@ -141,44 +121,44 @@ class TradePlayer(Menu):
                 reader = csv.reader(file)
                 players = list(reader)
             for player in players:
-                if player[0].title() == self.trading_team_name.title():
+                if player[0].title() == self.trading_team_name:
                     depth2 += 1
-                if player[1].title() == self.traded_player_name.title():
+                if player[1].title() == self.traded_player_name:
                     depth2 += 1
                 if player[3].title() == True:
                     depth2 += 1
                 if depth2 == 3:
                     self.trading_team_ready = True
         
-        if depth3 == 2:
-            team_name = str(input("Enter Recieving Team Name\n"))
-            self.trading_team_name = team_name
-            depth += 1
-        if depth3 == 3:
-            player_name = str(input("Enter Recieving Team Player Name\n"))
-            self.traded_player_name = player_name
-            depth += 1
-        if depth3 == 4:
-            with open('players.csv', 'r') as file:
-                reader = csv.reader(file)
-                players = list(reader)
-            for player in players:
-                if player[0].title() == self.recieving_team_name.title():
-                    depth2 += 1
-                if player[1].title() == self.recieved_player_name.title():
-                    depth2 += 1
-                if player[3].title() == True:
-                    depth2 += 1
-                if depth2 == 3:
-                    self.recieved_team_ready = True
+                if depth == 2:
+                    team_name = str(input("Enter Recieving Team Name\n")).title()
+                    self.trading_team_name = team_name
+                    depth += 1
+                if depth == 3:
+                    player_name = str(input("Enter Recieving Team Player Name\n")).title()
+                    self.traded_player_name = player_name
+                    depth += 1
+                if depth == 4:
+                    with open('players.csv', 'r') as file:
+                        reader = csv.reader(file)
+                        players = list(reader)
+                    for player in players:
+                        if player[0].title() == self.recieving_team_name:
+                            depth2 += 1
+                        if player[1].title() == self.recieved_player_name:
+                            depth2 += 1
+                        if player[3].title() == True:
+                            depth2 += 1
+                        if depth2 == 3:
+                            self.recieving_team_ready = True
+        
+                if self.recieving_team_ready == True and self.trading_team_ready == True:
+                    print("YES")
+        
         
 
-        if self.recieving_team_ready and self.trading_team_ready:
-            print("YES")
-        
-        
-
-
+class TradePlayer(Menu):
+    pass
 
 
 
