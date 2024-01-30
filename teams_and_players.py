@@ -86,6 +86,39 @@ class TeamInfo:
 
 
 
+class TradePlayer(Menu):
+
+    def __init__(self):
+        self.trading_team_name = None
+        self.recieving_team_name = None
+        self.traded_player_name = None
+        self.recieved_player_name = None
+        super().__init__()
+
+
+    # def rent_video(self):
+    #     movies = []
+    #     count1 = 0
+    #     print("Please enter the following information to check availability of your video")
+    #     if count1 == 0:
+    #         input1 = str(input( "Enter Account ID\n"))
+    #         self.customer_id = input1
+    #         count1 += 1
+    #     if count1 == 1:
+    #         input2 = str(input( "Enter Movie Title\n"))
+    #         self.movie_title = input2.title()
+    #         count1 += 1
+    #     with open('inventory.csv', 'r') as file:
+    #         reader = csv.reader(file)
+    #         movies = list(reader)
+    #     for movie in movies:
+    #         if movie[1].title() == self.movie_title.title():
+    #             if movie[2] > '0':
+    #                 pass
+
+
+
+
 
 
 new_run = Menu()
