@@ -95,12 +95,57 @@ class TradePlayer(Menu):
 
     def __init__(self):
         self.trading_team_name = None
-        self.recieving_team_name = None
         self.traded_player_name = None
-        self.recieved_player_name = None
         self.trading_team_ready = False
+        self.trading_player_position = None
+        self.recieved_player_name = None
+        self.recieving_team_name = None
         self.recieving_team_ready = False
-        super().__init__()
+        self.recieving_player_position = None
+        self.make_trade = None
+        #super().__init__()
+    
+
+
+    def swap_trading_team_to_recieving_team(self, trading_team_name, trading_player_name, receiving_team_name, receiving_player_name, recieving_player_position, trading_player_position):
+        with open('players.csv', 'r') as file:
+            reader = csv.reader(file)
+            players = list(reader)
+
+        for player in players:
+            if player[0] == trading_team_name and player[1] == trading_player_name:
+                print(f"Before: {player}")
+                player[0] = receiving_team_name
+                player[1] = receiving_player_name
+                player[2] = recieving_player_position
+                print(f"After: {player}")
+        
+        print("Modified Players List:", players) 
+        # Update the CSV file with the modified player information
+        with open('players.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(players)
+
+
+        with open('players.csv', 'r') as file:
+            reader = csv.reader(file)
+            players = list(reader)
+
+        for player in players:
+            if player[0] == receiving_team_name and player[1] == receiving_player_name:
+                print(f"Before: {player}")
+                player[0] = trading_team_name
+                player[1] = trading_player_name
+                player[2] = trading_player_position
+                print(f"After: {player}")
+                
+
+        # Update the CSV file with the modified player information
+        with open('players.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(players)
+
+
 
 
     def validate_trading_team_input(self):
@@ -117,6 +162,10 @@ class TradePlayer(Menu):
             self.traded_player_name = player_name
             depth += 1
         if depth == 2:
+            player_position1 = str(input("Enter players position\n")).title()
+            self.trading_player_position = player_position1
+            depth += 1
+        if depth == 3:
             with open('players.csv', 'r') as file:
                 reader = csv.reader(file)
                 players = list(reader)
@@ -125,40 +174,53 @@ class TradePlayer(Menu):
                     depth2 += 1
                 if player[1].title() == self.traded_player_name:
                     depth2 += 1
-                if player[3].title() == True:
+                if player[3].title() == 'True':
                     depth2 += 1
-                if depth2 == 3:
+                if player[2].title() == self.trading_player_position:
+                    depth2 += 1
+                if depth2 == 4:
                     self.trading_team_ready = True
         
-                if depth == 2:
-                    team_name = str(input("Enter Recieving Team Name\n")).title()
-                    self.trading_team_name = team_name
-                    depth += 1
                 if depth == 3:
-                    player_name = str(input("Enter Recieving Team Player Name\n")).title()
-                    self.traded_player_name = player_name
+                    team_name = str(input("Enter Recieving Team Name\n")).title()
+                    self.recieving_team_name = team_name
                     depth += 1
                 if depth == 4:
+                    player_name = str(input("Enter Recieving Team Player Name\n")).title()
+                    self.recieving_player_name = player_name
+                    depth += 1
+                if depth == 5:
+                    player_position2 = str(input("Enter players position\n")).title()
+                    self.recieving_player_position = player_position2
+                    depth += 1
+                if depth == 6:
                     with open('players.csv', 'r') as file:
                         reader = csv.reader(file)
                         players = list(reader)
                     for player in players:
                         if player[0].title() == self.recieving_team_name:
-                            depth2 += 1
+                            depth3 += 1
                         if player[1].title() == self.recieved_player_name:
-                            depth2 += 1
-                        if player[3].title() == True:
-                            depth2 += 1
-                        if depth2 == 3:
+                            depth3 += 1
+                        if player[3].title() == 'True':
+                            depth3 += 1
+                        if player[2].title() == self.recieving_player_position:
+                            depth3 += 1
+                        if depth3 == 4:
                             self.recieving_team_ready = True
         
-                if self.recieving_team_ready == True and self.trading_team_ready == True:
-                    print("YES")
-        
-        
+        if self.recieving_team_ready == True and self.trading_team_ready == True:
+            print("Teams are ready for trade")
+            trade_go = str(input("Would you like to make this trade?\n yes or no\n")).title()
+            self.make_trade = trade_go
+            if self.make_trade == 'Yes':
+                # Call the swap_teams_and_players method with the respective team and player names
+                print("yellow")
+                self.swap_trading_team_to_recieving_team(self.trading_team_name, self.traded_player_name, self.recieving_team_name, self.recieved_player_name, self.recieving_player_position, self.trading_player_position)
+            else:
+                print("Teams are not ready for trade")
 
-class TradePlayer(Menu):
-    pass
+        
 
 
 
