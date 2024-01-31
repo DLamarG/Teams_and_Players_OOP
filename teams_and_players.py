@@ -28,7 +28,7 @@ class Menu():
                 pass
             if selection == '5':
                 trade_player_instance = TradePlayer()
-                trade_player_instance.validate_trading_team_input()
+                trade_player_instance.official_player_trade()
             if selection == '6':
                 pass
             if selection == '7':
@@ -91,7 +91,7 @@ class TeamInfo:
 
 
 
-class TradePlayer:
+class TradePlayer(Menu):
 
     def __init__(self):
         self.trading_team_name = None
@@ -171,6 +171,18 @@ class TradePlayer:
                 self.swap_players()
             else:
                 print("Trade canceled. Teams are not ready for trade.")
+
+    def official_player_trade(self):
+        count = 0
+        if count == 0:
+            self.validate_trading_team_input()
+            count += 1
+        if count == 1:
+            self.validate_receiving_team_input()
+            count += 1
+        if count == 2:
+            self.make_trade_decision()
+
 
 # class TradePlayer(Menu):
 
