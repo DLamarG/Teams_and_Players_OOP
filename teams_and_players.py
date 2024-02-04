@@ -33,8 +33,7 @@ class Menu():
                 fire_coach = ManageCoaches()
                 fire_coach.official_coach_termination()
             if selection == '7':
-                 hire_coach = ManageCoaches()
-                 hire_coach.official_coach_hiring()
+                 pass
             if selection == '8':
                  pass
             if selection == '9':
@@ -105,6 +104,7 @@ class TradePlayer(Menu):
         self.recieving_team_ready = False
         self.recieving_player_position = None
         self.make_trade = None
+        
 
     def load_players(self):
         with open('players.csv', 'r') as file:
@@ -215,119 +215,52 @@ class ManageCoaches(Menu):
             writer.writerows(coaches)
 
 
-    def validate_active_coach(self, fired_coach_name, fired_team_name):
+    def validate_coach_input(self, team_name, coach_name):
         coaches = self.load_coaches()
         for coach in coaches:
-            if coach[2].title() == fired_coach_name and coach[1].title() == 'Yes' and coach[0] == fired_team_name:
+            if coach[0].title() == team_name and coach[2].title() == coach_name and coach[1].title() == 'Yes':
                 return True
         else:
-            print("Woops somthing went wrong, please check input and try again!")
+            print("Oops, something went wrong. Please check input and try again!")
 
-    def validate_active_coach_input(self):
-        print("Follow the instructions to validate information for coach being fired")
+    def validate_termination_input(self):
+        print("Follow the instructions to validate information for coach termination")
         team_name = str(input("Enter Team Name: ")).title()
         coach_name = str(input("Enter Coach Name: ")).title()
 
-        if self.validate_active_coach(coach_name, team_name):
+        if self.validate_coach_input(team_name, coach_name):
             self.ready_to_fire = True
-            self.fired_coach_name = coach_name
             self.fired_team_name = team_name
-            print("Active Coach is ready.")
+            self.fired_coach_name = coach_name
+            print("Coach is ready for termination.")
 
-    
-    def validate_inactive_coach(self, hired_coach_name):
-        coaches = self.load_coaches()
-        for coach in coaches:
-            if  coach[2].title() == hired_coach_name and coach[1].title() == 'No':
-                return True
-        else:
-            print("Woops somthing went wrong, please check input and try again!")
-
-
-    def validate_new_team_recieving_coach(self, hired_team_name):
-        coaches = self.load_coaches()
-        for coach in coaches:
-            if  coach[0].title() == hired_team_name and coach[2] == 'None':
-                return True
-        else:
-            print("Woops somthing went wrong, please check input and try again!")
-
-    def validate_inactive_coach_input(self):
-        print("Follow the instructions to validate information for coach being fired")
-        coach_name = str(input("Enter Coach Name: ")).title()
-        team_name = str(input("Enter Team Name")).title()
-        
-        if self.validate_inactive_coach(coach_name) and self.validate_new_team_recieving_coach(team_name):
-            self.hired_coach_name = coach_name
-            self.hired_team_name = team_name
-            print("In-active Coach is ready.")
-
-    
-    def make_fire_decision(self):
+    def make_termination_decision(self):
         if self.ready_to_fire:
-            print("Team is ready for fire the current coach.")
-            fire_go = str(input("Would you like to terminate this coach? (yes or no): ")).title()
-            self.finalize_firing = fire_go
-            if self.finalize_firing == 'Yes':
-                self.fire_coach(self.fired_coach_name)
+            print("Team is ready to terminate the coach.")
+            termination_decision = str(input("Would you like to terminate this coach? (yes or no): ")).title()
+
+            if termination_decision == 'Yes':
+                self.terminate_coach()
             else:
                 print("Termination canceled. Team is not ready for termination.")
 
-    
-    def make_hire_decision(self):
-        if self.ready_to_fire:
-            print("Team is ready for hire the current coach.")
-            fire_go = str(input("Would you like to hire this coach? (yes or no): ")).title()
-            self.finalize_firing = fire_go
-            if self.finalize_firing == 'Yes':
-                self.hire_coach()
-            else:
-                print(f"Hire canceled. Team is not ready to hire ${self.hired_coach_name}.")
-
-
-
-    def fire_coach(self, fired_coach_name):
+    def terminate_coach(self):
         coaches = self.load_coaches()
         for coach in coaches:
-            if coach[2] == fired_coach_name:
-                coach[2] == "None"
-                coach[1] == "No"
-        
+            if coach[0].title() == self.fired_team_name and coach[2].title() == self.fired_coach_name:
+                coach[1] = "No"
+                coach[2] = "None"
+
         self.save_coaches(coaches)
-        print(f"Coach ${self.fired_coach_name} fired successfully.")
-
-
-    def hire_coach(self, hired_coach_name, hired_team_name):
-        coaches = self.load_coaches()
-        for coach in coaches:
-            if coach[0] == hired_team_name:
-                coach[2] == hired_coach_name
-                coach[1] == "Yes"
-        
-        self.save_coaches(coaches)
-        print(f"Coach ${self.hired_coach_name} hired successfully.")
-
-
+        print(f"Coach {self.fired_coach_name} terminated successfully.")
 
     def official_coach_termination(self):
         count = 0
         if count == 0:
-            self.validate_active_coach_input()
+            self.validate_termination_input()
             count += 1
         if count == 1:
-            self.make_fire_decision()
-            count += 1
-        if count == 2:
-            count = 0
-
-
-    def official_coach_hiring(self):
-        count = 0
-        if count == 0:
-            self.validate_inactive_coach_input()
-            count += 1
-        if count == 1:
-            self.make_hire_decision()
+            self.make_termination_decision()
             count += 1
         if count == 2:
             count = 0
