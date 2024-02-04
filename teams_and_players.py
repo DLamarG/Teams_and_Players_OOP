@@ -184,7 +184,10 @@ class TradePlayer(Menu):
             self.make_trade_decision()
 
 
-        
+
+
+class ManageCoaches(Menu):
+    pass
 
 
 
