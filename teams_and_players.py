@@ -188,32 +188,21 @@ class TradePlayer(Menu):
 
 
 
-class ManageCoaches(Menu):
-
+class ManageCoaches:
     def __init__(self):
         self.fired_team_name = None
         self.fired_coach_name = None
-        self.hire = None
-        self.fire = None
-        self.ready_to_hire = None
         self.ready_to_fire = None
-        self.hired_team_name = None
-        self.hired_coach_name = None
-        self.finalize_firing = None
-        self.finalize_hiring = None
-
 
     def load_coaches(self):
-        with open('coaches.csv', 'r') as file:
+        with open('teams_and_coaches.csv', 'r') as file:
             reader = csv.reader(file)
             return list(reader)
-        
 
-    def save_coaches(self, coaches):
-        with open('coaches.csv', 'w', newline='') as file:
+    def save_coaches(self, coaches, filename):
+        with open(filename, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerows(coaches)
-
 
     def validate_coach_input(self, team_name, coach_name):
         coaches = self.load_coaches()
@@ -225,8 +214,8 @@ class ManageCoaches(Menu):
 
     def validate_termination_input(self):
         print("Follow the instructions to validate information for coach termination")
-        team_name = str(input("Enter Team Name: ")).title()
-        coach_name = str(input("Enter Coach Name: ")).title()
+        team_name = input("Enter Team Name: ").title()
+        coach_name = input("Enter Coach Name: ").title()
 
         if self.validate_coach_input(team_name, coach_name):
             self.ready_to_fire = True
@@ -237,7 +226,7 @@ class ManageCoaches(Menu):
     def make_termination_decision(self):
         if self.ready_to_fire:
             print("Team is ready to terminate the coach.")
-            termination_decision = str(input("Would you like to terminate this coach? (yes or no): ")).title()
+            termination_decision = input("Would you like to terminate this coach? (yes or no): ").title()
 
             if termination_decision == 'Yes':
                 self.terminate_coach()
@@ -246,12 +235,16 @@ class ManageCoaches(Menu):
 
     def terminate_coach(self):
         coaches = self.load_coaches()
+        inactive_coaches = []
+
         for coach in coaches:
             if coach[0].title() == self.fired_team_name and coach[2].title() == self.fired_coach_name:
                 coach[1] = "No"
+                inactive_coaches.append([coach[2]])  # Add fired coach's name to inactive_coaches list
                 coach[2] = "None"
 
-        self.save_coaches(coaches)
+        self.save_coaches(coaches, 'teams_and_coaches.csv')
+        self.save_coaches(inactive_coaches, 'inactive_coaches.csv')
         print(f"Coach {self.fired_coach_name} terminated successfully.")
 
     def official_coach_termination(self):
