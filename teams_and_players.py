@@ -236,10 +236,10 @@ class ManageCoaches:
     def terminate_coach(self):
         coaches = self.load_coaches()
         inactive_coaches = []
-
+        
         for coach in coaches:
+            print(coach)
             if coach[0].title() == self.fired_team_name and coach[2].title() == self.fired_coach_name:
-                coach[1] = "No"
                 inactive_coaches.append([coach[2]])  # Add fired coach's name to inactive_coaches list
                 coach[2] = "None"
 
