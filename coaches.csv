@@ -1,5 +1,5 @@
 Team_Name,Active,Coach_Name
-Chicago Bulls,No,None
+Chicago Bulls,Yes,James Burns
 Houston Rockets,Yes,Delbert Lang
 L.A. Lakers,Yes,Carole Windler
 Orlando Magic,Yes,Damon Walker
@@ -17,8 +17,4 @@ LA Kings,Yes,Camille Beahan
 Carolina Wizards,North-West,Javier O'Hara
 Oakland Stars,Yes,Shar Mertz
 Ney York Nets,Yes,Angel Wunsch
-None,No,Jordan Micheals
-None,No,Pete Franklin
-None,No,Fred Simms
-None,No,Bradley Carpenter
-None,No,Samuel Jacks
+
