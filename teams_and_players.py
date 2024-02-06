@@ -204,6 +204,12 @@ class ManageCoaches:
             writer = csv.writer(file)
             writer.writerows(coaches)
 
+    def save_inactive_coaches(self, coaches, filename):
+        with open(filename, 'a', newline='') as file:  # Use 'a' mode to append to the file
+            writer = csv.writer(file)
+            writer.writerows(coaches)
+
+
     def validate_coach_input(self, team_name, coach_name):
         coaches = self.load_coaches()
         for coach in coaches:
@@ -244,7 +250,7 @@ class ManageCoaches:
                 coach[2] = "None"
 
         self.save_coaches(coaches, 'teams_and_coaches.csv')
-        self.save_coaches(inactive_coaches, 'inactive_coaches.csv')
+        self.save_inactive_coaches(inactive_coaches, 'inactive_coaches.csv')
         print(f"Coach {self.fired_coach_name} terminated successfully.")
 
     def official_coach_termination(self):
