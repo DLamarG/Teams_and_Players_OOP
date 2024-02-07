@@ -256,20 +256,6 @@ class ManageCoaches:
         print(f"Coach {self.fired_coach_name} terminated successfully.")
 
 
-    # def terminate_coach(self):
-    #     coaches = self.load_coaches()
-    #     inactive_coaches = []
-        
-    #     for coach in coaches:
-    #         print(coach)
-    #         if coach[0].title() == self.fired_team_name and coach[2].title() == self.fired_coach_name:
-    #             inactive_coaches.append([coach[2]])  # Add fired coach's name to inactive_coaches list
-    #             coach[2] = "None"
-    #             my_list = ' '.join([str(elem) for elem in inactive_coaches])
-
-    #     self.save_coaches(coaches, 'teams_and_coaches.csv')
-    #     self.save_inactive_coaches(inactive_coaches, 'inactive_coaches.csv')
-    #     print(f"Coach {self.fired_coach_name} terminated successfully.")
 
     def official_coach_termination(self):
         count = 0
