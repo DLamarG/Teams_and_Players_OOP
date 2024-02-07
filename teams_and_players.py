@@ -193,9 +193,17 @@ class ManageCoaches:
         self.fired_team_name = None
         self.fired_coach_name = None
         self.ready_to_fire = None
+        self.hired_team_name = None
+        self.hired_coach_name = None
+        self.ready_to_hire = None
 
     def load_coaches(self):
         with open('teams_and_coaches.csv', 'r') as file:
+            reader = csv.reader(file)
+            return list(reader)
+    
+    def load_inactive_coaches(self):
+        with open('inactive_coaches.csv', 'r') as file:
             reader = csv.reader(file)
             return list(reader)
 
@@ -212,7 +220,7 @@ class ManageCoaches:
 
 
 
-    def validate_coach_input(self, team_name, coach_name):
+    def validate_fire_coach_input(self, team_name, coach_name):
         coaches = self.load_coaches()
         for coach in coaches:
             if coach[0].title() == team_name and coach[2].title() == coach_name and coach[1].title() == 'Yes':
@@ -220,12 +228,39 @@ class ManageCoaches:
         else:
             print("Oops, something went wrong. Please check input and try again!")
 
+    def validate_hire_coach_input(self, team_name, coach_name):
+        coaches = self.load_inactive_coaches()
+        teams = self.load_coaches()
+        for coach in coaches:
+            if coach[0].title() == coach_name:
+                return True
+        else:
+            print("Oops, something went wrong. Please check coach name and try again!")
+
+        for team in teams:
+            if team[0].title() == team_name and team[2] == "None":
+                return True
+        else:
+            print("Oops, something went wrong. Please check team name and try again!")
+
     def validate_termination_input(self):
         print("Follow the instructions to validate information for coach termination")
         team_name = input("Enter Team Name: ").title()
         coach_name = input("Enter Coach Name: ").title()
 
-        if self.validate_coach_input(team_name, coach_name):
+        if self.validate_fire_coach_input(team_name, coach_name):
+            self.ready_to_fire = True
+            self.fired_team_name = team_name
+            self.fired_coach_name = coach_name
+            print("Coach is ready for termination.")
+
+
+    def validate_hire_input(self):
+        print("Follow the instructions to hire a new coach")
+        team_name = input("Enter Team Name: ").title()
+        coach_name = input("Enter Coach Name: ").title()
+
+        if self.validate_fire_coach_input(team_name, coach_name):
             self.ready_to_fire = True
             self.fired_team_name = team_name
             self.fired_coach_name = coach_name
