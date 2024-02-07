@@ -1,5 +1,8 @@
 import csv
 from random import *
+import pandas as pd
+
+
 class Menu():
 
     def __init__(self):
@@ -33,7 +36,8 @@ class Menu():
                 fire_coach = ManageCoaches()
                 fire_coach.official_coach_termination()
             if selection == '7':
-                 pass
+                 hire_coach = ManageCoaches()
+                 hire_coach.official_coach_hire()
             if selection == '8':
                  pass
             if selection == '9':
@@ -260,11 +264,11 @@ class ManageCoaches:
         team_name = input("Enter Team Name: ").title()
         coach_name = input("Enter Coach Name: ").title()
 
-        if self.validate_fire_coach_input(team_name, coach_name):
-            self.ready_to_fire = True
-            self.fired_team_name = team_name
-            self.fired_coach_name = coach_name
-            print("Coach is ready for termination.")
+        if self.validate_hire_coach_input(team_name, coach_name):
+            self.ready_to_hire = True
+            self.hired_team_name = team_name
+            self.hired_coach_name = coach_name
+            print("Coach is ready to be hired.")
 
     def make_termination_decision(self):
         if self.ready_to_fire:
@@ -275,6 +279,17 @@ class ManageCoaches:
                 self.terminate_coach()
             else:
                 print("Termination canceled. Team is not ready for termination.")
+
+    
+    def make_hire_decision(self):
+        if self.ready_to_hire:
+            print(f"Team is ready to hire ${self.hired_coach_name} the coach.")
+            hire_decision = input(f"Would you like to hire Coach ${self.hired_coach_name}? (yes or no): ").title()
+
+            if hire_decision == 'Yes':
+                self.hire_coach()
+            else:
+                print(f"Hire canceled. Team is not ready to hire ${self.hired_coach_name}.")
 
     def terminate_coach(self):
         coaches = self.load_coaches()
@@ -291,6 +306,23 @@ class ManageCoaches:
         print(f"Coach {self.fired_coach_name} terminated successfully.")
 
 
+    def hire_coach(self):
+        coaches_and_teams = self.load_coaches()
+        # coaches_inactive = self.load_inactive_coaches()
+        
+        for coach in coaches_and_teams:
+            if coach[0].title() == self.hired_team_name and coach[2].title() == "None":
+                coach[2] = self.hired_coach_name
+
+        df = pd.read_csv('inactive_coaches.csv')
+        df = df.drop(df[df.Coach_Name == self.hired_coach_name].index)
+        df.to_csv('inactive_coaches.csv', index=False)
+
+        self.save_coaches(coaches_and_teams, 'teams_and_coaches.csv')
+        # self.save_coaches(coaches_inactive, 'inactive_coaches.csv')
+        print(f"Coach {self.hired_coach_name} Hired successfully!")
+
+
 
     def official_coach_termination(self):
         count = 0
@@ -303,6 +335,17 @@ class ManageCoaches:
         if count == 2:
             count = 0
 
+
+    def official_coach_hire(self):
+        count = 0
+        if count == 0:
+            self.validate_hire_input()
+            count += 1
+        if count == 1:
+            self.make_hire_decision()
+            count += 1
+        if count == 2:
+            count = 0
 
 
         
