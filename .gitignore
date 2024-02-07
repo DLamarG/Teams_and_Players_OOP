@@ -1,2 +1,4 @@
 VirtEnv/
 env/
+.env
+__pycache__/

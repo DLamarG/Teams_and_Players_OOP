@@ -348,7 +348,6 @@ class ManageCoaches:
             count = 0
 
 
-        
 
 new_run = Menu()
 new_run.run()
