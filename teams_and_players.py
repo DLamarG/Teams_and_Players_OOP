@@ -28,7 +28,7 @@ class Menu():
             if selection == '3':
                 TeamInfo.print_team_division_coach_to_screen()
             if selection == '4':
-                pass
+                TeamInfo.list_division_info()
             if selection == '5':
                 trade_player_instance = TradePlayer()
                 trade_player_instance.official_player_trade()
@@ -61,7 +61,7 @@ class Menu():
 class TeamInfo():
 
     def __init__(self):
-          self.inventory = None
+          self.division = None
 
     @classmethod
     def print_team_name_to_screen(cls):
@@ -93,8 +93,23 @@ class TeamInfo():
                 print(f"Coach: {row['Coach']} ")
                 print(f"Division: {row['Division']}")
                 print()
+                
+    @classmethod
+    def load_teams_by_division(cls):
+        with open('Teams.csv', 'r') as file:
+            reader = csv.reader(file)
+            return list(reader)
 
+    def list_division_info(self):
+        print("Follow the instructions to validate division")
+        division_name = str(input("Enter Division Name: ")).title()
 
+        teams = self.load_teams_by_division()
+        for division in teams:
+            if division[1].title() == division_name:
+                print()
+                print(f"Team: {division[0]}, Division: {division[1]}")
+                print()
 
 class TradePlayer(Menu):
 
