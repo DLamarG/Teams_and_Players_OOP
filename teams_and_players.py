@@ -28,7 +28,7 @@ class Menu():
             if selection == '3':
                 TeamInfo.print_team_division_coach_to_screen()
             if selection == '4':
-                TeamInfo.list_division_info()
+                TeamInfo.list_teams_by_division()
             if selection == '5':
                 trade_player_instance = TradePlayer()
                 trade_player_instance.official_player_trade()
@@ -94,6 +94,23 @@ class TeamInfo():
                 print(f"Division: {row['Division']}")
                 print()
 
+
+    @classmethod
+    def list_teams_by_division(cls):
+        division = input("Enter the division name: ").title()
+        found = False
+        with open("Teams.csv", 'r') as csvfile:
+            teams = csv.DictReader(csvfile)
+            for row in teams:
+                if row['Division'].title() == division:
+                    found = True
+                    print()
+                    print(f"Team: {row['Team_Name']}")
+                    print(f"Coach: {row['Coach']} ")
+                    print(f"Division: {row['Division']}")
+                    print()
+        if not found:
+            print("No teams found in the specified division.")
 
 class TradePlayer(Menu):
 
